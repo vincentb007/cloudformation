@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Resources": {
-    "PredictAI-VPC": {
+    "PredictAI": {
       "Type": "AWS::EC2::VPC",
       "Properties": {
         "CidrBlock": "10.0.0.0/16",
@@ -10,7 +10,7 @@
         "Tags": [
           {
             "Key": "Name",
-            "Value": "PredictAI-VPC"
+            "Value": "PredictAI"
           }
         ]
       }
@@ -29,14 +29,14 @@
     "AttachGateway": {
       "Type": "AWS::EC2::VPCGatewayAttachment",
       "Properties": {
-        "VpcId": { "Ref": "PredictAI-VPC" },
+        "VpcId": { "Ref": "PredictAI" },
         "InternetGatewayId": { "Ref": "InternetGateway" }
       }
     },
     "PublicSubnet1": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": { "Ref": "PredictAI-VPC" },
+        "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.1.0/24",
         "AvailabilityZone": "eu-west-3a",
         "MapPublicIpOnLaunch": true
@@ -45,7 +45,7 @@
     "PublicSubnet2": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": { "Ref": "PredictAI-VPC" },
+        "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.2.0/24",
         "AvailabilityZone": "eu-west-3b",
         "MapPublicIpOnLaunch": true
@@ -54,7 +54,7 @@
     "PublicSubnet3": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": { "Ref": "PredictAI-VPC" },
+        "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.3.0/24",
         "AvailabilityZone": "eu-west-3c",
         "MapPublicIpOnLaunch": true
@@ -63,7 +63,7 @@
     "PrivateSubnet1": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": { "Ref": "PredictAI-VPC" },
+        "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.4.0/24",
         "AvailabilityZone": "eu-west-3a"
       }
@@ -71,7 +71,7 @@
     "PrivateSubnet2": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": { "Ref": "PredictAI-VPC" },
+        "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.5.0/24",
         "AvailabilityZone": "eu-west-3b"
       }
@@ -79,7 +79,7 @@
     "PrivateSubnet3": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": { "Ref": "PredictAI-VPC" },
+        "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.6.0/24",
         "AvailabilityZone": "eu-west-3c"
       }
@@ -87,7 +87,7 @@
     "PublicRouteTable": {
       "Type": "AWS::EC2::RouteTable",
       "Properties": {
-        "VpcId": { "Ref": "PredictAI-VPC" }
+        "VpcId": { "Ref": "PredictAI" }
       }
     },
     "PublicRoute": {
@@ -115,7 +115,7 @@
     "PrivateRouteTable": {
       "Type": "AWS::EC2::RouteTable",
       "Properties": {
-        "VpcId": { "Ref": "PredictAI-VPC" }
+        "VpcId": { "Ref": "PredictAI" }
       }
     },
     "PrivateRoute": {
