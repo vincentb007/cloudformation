@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Resources": {
-    "MyVPC": {
+    "PredictAI-VPC": {
       "Type": "AWS::EC2::VPC",
       "Properties": {
         "CidrBlock": "10.0.0.0/16",
@@ -10,7 +10,7 @@
         "Tags": [
           {
             "Key": "Name",
-            "Value": "MyVPC"
+            "Value": "PredictAI-VPC"
           }
         ]
       }
@@ -21,7 +21,7 @@
         "Tags": [
           {
             "Key": "Name",
-            "Value": "MyInternetGateway"
+            "Value": "PredictAI-InternetGateway"
           }
         ]
       }
@@ -29,137 +29,73 @@
     "AttachGateway": {
       "Type": "AWS::EC2::VPCGatewayAttachment",
       "Properties": {
-        "VpcId": {
-          "Ref": "MyVPC"
-        },
-        "InternetGatewayId": {
-          "Ref": "InternetGateway"
-        }
+        "VpcId": { "Ref": "PredictAI-VPC" },
+        "InternetGatewayId": { "Ref": "InternetGateway" }
       }
     },
     "PublicSubnet1": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": {
-          "Ref": "MyVPC"
-        },
+        "VpcId": { "Ref": "PredictAI-VPC" },
         "CidrBlock": "10.0.1.0/24",
-        "AvailabilityZone": {
-          "Select": [
-            0,
-            {
-              "Fn::GetAZs": ""
-            }
-          ]
-        },
+        "AvailabilityZone": "eu-west-3a",
         "MapPublicIpOnLaunch": true
       }
     },
     "PublicSubnet2": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": {
-          "Ref": "MyVPC"
-        },
+        "VpcId": { "Ref": "PredictAI-VPC" },
         "CidrBlock": "10.0.2.0/24",
-        "AvailabilityZone": {
-          "Select": [
-            1,
-            {
-              "Fn::GetAZs": ""
-            }
-          ]
-        },
+        "AvailabilityZone": "eu-west-3b",
         "MapPublicIpOnLaunch": true
       }
     },
     "PublicSubnet3": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": {
-          "Ref": "MyVPC"
-        },
+        "VpcId": { "Ref": "PredictAI-VPC" },
         "CidrBlock": "10.0.3.0/24",
-        "AvailabilityZone": {
-          "Select": [
-            2,
-            {
-              "Fn::GetAZs": ""
-            }
-          ]
-        },
+        "AvailabilityZone": "eu-west-3c",
         "MapPublicIpOnLaunch": true
       }
     },
     "PrivateSubnet1": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": {
-          "Ref": "MyVPC"
-        },
+        "VpcId": { "Ref": "PredictAI-VPC" },
         "CidrBlock": "10.0.4.0/24",
-        "AvailabilityZone": {
-          "Select": [
-            0,
-            {
-              "Fn::GetAZs": ""
-            }
-          ]
-        }
+        "AvailabilityZone": "eu-west-3a"
       }
     },
     "PrivateSubnet2": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": {
-          "Ref": "MyVPC"
-        },
+        "VpcId": { "Ref": "PredictAI-VPC" },
         "CidrBlock": "10.0.5.0/24",
-        "AvailabilityZone": {
-          "Select": [
-            1,
-            {
-              "Fn::GetAZs": ""
-            }
-          ]
-        }
+        "AvailabilityZone": "eu-west-3b"
       }
     },
     "PrivateSubnet3": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "VpcId": {
-          "Ref": "MyVPC"
-        },
+        "VpcId": { "Ref": "PredictAI-VPC" },
         "CidrBlock": "10.0.6.0/24",
-        "AvailabilityZone": {
-          "Select": [
-            2,
-            {
-              "Fn::GetAZs": ""
-            }
-          ]
-        }
+        "AvailabilityZone": "eu-west-3c"
       }
     },
     "PublicRouteTable": {
       "Type": "AWS::EC2::RouteTable",
       "Properties": {
-        "VpcId": {
-          "Ref": "MyVPC"
-        }
+        "VpcId": { "Ref": "PredictAI-VPC" }
       }
     },
     "PublicRoute": {
       "Type": "AWS::EC2::Route",
       "Properties": {
-        "RouteTableId": {
-          "Ref": "PublicRouteTable"
-        },
+        "RouteTableId": { "Ref": "PublicRouteTable" },
         "DestinationCidrBlock": "0.0.0.0/0",
-        "GatewayId": {
-          "Ref": "InternetGateway"
-        }
+        "GatewayId": { "Ref": "InternetGateway" }
       }
     },
     "EIPForNAT": {
@@ -172,57 +108,37 @@
     "NATGateway": {
       "Type": "AWS::EC2::NatGateway",
       "Properties": {
-        "SubnetId": {
-          "Ref": "PublicSubnet1"
-        },
-        "AllocationId": {
-          "Fn::GetAtt": [
-            "EIPForNAT",
-            "AllocationId"
-          ]
-        }
+        "SubnetId": { "Ref": "PublicSubnet1" },
+        "AllocationId": { "Fn::GetAtt": ["EIPForNAT", "AllocationId"] }
       }
     },
     "PrivateRouteTable": {
       "Type": "AWS::EC2::RouteTable",
       "Properties": {
-        "VpcId": {
-          "Ref": "MyVPC"
-        }
+        "VpcId": { "Ref": "PredictAI-VPC" }
       }
     },
     "PrivateRoute": {
       "Type": "AWS::EC2::Route",
       "Properties": {
-        "RouteTableId": {
-          "Ref": "PrivateRouteTable"
-        },
+        "RouteTableId": { "Ref": "PrivateRouteTable" },
         "DestinationCidrBlock": "0.0.0.0/0",
-        "NatGatewayId": {
-          "Ref": "NATGateway"
-        }
+        "NatGatewayId": { "Ref": "NATGateway" }
       }
     },
     "ApplicationLoadBalancer": {
       "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
       "Properties": {
-        "Name": "MyALB",
+        "Name": "PredictAI-ALB",
         "Subnets": [
-          {
-            "Ref": "PublicSubnet1"
-          },
-          {
-            "Ref": "PublicSubnet2"
-          },
-          {
-            "Ref": "PublicSubnet3"
-          }
+          { "Ref": "PublicSubnet1" },
+          { "Ref": "PublicSubnet2" },
+          { "Ref": "PublicSubnet3" }
         ],
         "Scheme": "internet-facing",
-        "SecurityGroups": [
-          "YourSecurityGroupID"
-        ]
+        "SecurityGroups": ["YourSecurityGroupID"]
       }
     }
   }
 }
+
