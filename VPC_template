@@ -38,7 +38,7 @@
       "Properties": {
         "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.1.0/24",
-        "AvailabilityZone": "eu-west-3a",
+        "AvailabilityZone": "eu-west-1a",
         "MapPublicIpOnLaunch": true
       }
     },
@@ -47,7 +47,7 @@
       "Properties": {
         "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.2.0/24",
-        "AvailabilityZone": "eu-west-3b",
+        "AvailabilityZone": "eu-west-1b",
         "MapPublicIpOnLaunch": true
       }
     },
@@ -56,7 +56,7 @@
       "Properties": {
         "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.3.0/24",
-        "AvailabilityZone": "eu-west-3c",
+        "AvailabilityZone": "eu-west-1c",
         "MapPublicIpOnLaunch": true
       }
     },
@@ -65,7 +65,7 @@
       "Properties": {
         "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.4.0/24",
-        "AvailabilityZone": "eu-west-3a"
+        "AvailabilityZone": "eu-west-1a"
       }
     },
     "PrivateSubnet2": {
@@ -73,7 +73,7 @@
       "Properties": {
         "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.5.0/24",
-        "AvailabilityZone": "eu-west-3b"
+        "AvailabilityZone": "eu-west-1b"
       }
     },
     "PrivateSubnet3": {
@@ -81,7 +81,7 @@
       "Properties": {
         "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.6.0/24",
-        "AvailabilityZone": "eu-west-3c"
+        "AvailabilityZone": "eu-west-1c"
       }
     },
     "PublicRouteTable": {
