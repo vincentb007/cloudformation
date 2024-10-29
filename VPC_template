@@ -70,7 +70,13 @@
         "VpcId": { "Ref": "PredictAI" },
         "CidrBlock": "10.0.3.0/24",
         "AvailabilityZone": "eu-west-1c",
-        "MapPublicIpOnLaunch": true
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "PredictAI"
+          }
+        ]
       }
     },
     "PrivateSubnet1": {
