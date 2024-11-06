@@ -1,0 +1,45 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "RepositoryName": {
+      "Type": "String",
+      "Description": "The name of the ECR repository",
+      "Default": "Webapp"
+    },
+    "ImageScanningConfiguration": {
+      "Type": "String",
+      "AllowedValues": ["true", "false"],
+      "Default": "true",
+      "Description": "Enable image scanning on push"
+    },
+    "MutabilitySetting": {
+      "Type": "String",
+      "AllowedValues": ["MUTABLE", "IMMUTABLE"],
+      "Default": "MUTABLE",
+      "Description": "The tag mutability setting for the repository"
+    }
+  },
+  "Resources": {
+    "ECRRepository": {
+      "Type": "AWS::ECR::Repository",
+      "Properties": {
+        "RepositoryName": { "Ref": "RepositoryName" },
+        "ImageScanningConfiguration": {
+          "ScanOnPush": { "Ref": "ImageScanningConfiguration" }
+        },
+        "ImageTagMutability": { "Ref": "MutabilitySetting" },
+        "LifecyclePolicy": {
+          "LifecyclePolicyText": {
+            "Fn::Sub": "{\n  \"rules\": [\n    {\n      \"rulePriority\": 1,\n      \"description\": \"Expire untagged images after 30 days\",\n      \"selection\": {\n        \"tagStatus\": \"untagged\",\n        \"countType\": \"sinceImagePushed\",\n        \"countUnit\": \"days\",\n        \"countNumber\": 30\n      },\n      \"action\": {\n        \"type\": \"expire\"\n      }\n    }\n  ]\n}"
+          }
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ECRRepositoryURI": {
+      "Description": "The URI of the created ECR repository",
+      "Value": { "Fn::GetAtt": ["ECRRepository", "RepositoryUri"] }
+    }
+  }
+}
